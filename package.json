@@ -1,0 +1,30 @@
+{
+  "name": "minefield",
+  "version": "1.0.0",
+  "description": "Minefield Battle Royale",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "npm": "^6.11.3",
+    "socket.io": "^2.3.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mlg404/minefield-BattleRoyale.git"
+  },
+  "keywords": [
+    "minefield",
+    "battle",
+    "royale"
+  ],
+  "author": "Victor Eyer",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mlg404/minefield-BattleRoyale/issues"
+  },
+  "homepage": "https://github.com/mlg404/minefield-BattleRoyale#readme"
+}
