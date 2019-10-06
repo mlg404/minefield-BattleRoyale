@@ -12,13 +12,26 @@ app.get('/', function(req,res){
     res.sendFile(path.join(__dirname+'/index.html'));
 })
 
-io.on('connection', function(socket){
-    console.log('a user connected');
-    socket.on('disconnect', function(){
-        console.log('user disconnected');
-      });
-  });
-  
+app.get('/1', function(req,res){
+    res.sendFile(path.join(__dirname+'/index.html'));
+})
+// io.on('connection', function(socket){
+//     console.log('a user connected');
+//     socket.on('disconnect', function(){
+//         console.log('user disconnected');
+//       });
+//   });
+
+const game = io.of('/1');
+game.on('connection', function(socket){
+  console.log('someone connected');
+  game.clients((error,clients) => {
+    console.log(clients);
+  })
+});
+game.emit('hi', 'everyone!');
+
+
 http.listen(3000, function(){
     console.log('listening on *:3000');
   });
