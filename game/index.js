@@ -1,10 +1,7 @@
 var minefield = {
     sizex: 0,
     sizey: 0,
-    mines: {},
     template: [],
-
-
     setSize(x,y){
         this.sizex = x;
         this.sizey = y;
@@ -49,5 +46,30 @@ var minefield = {
                 }
             });
         });
+    },
+    reveal(i,j){
+        let place = this.template[i][j];
+        if (place === "x"){
+            console.log("end")
+        } else if (place === "0"){
+            // alguma função pra mostrar esse espaço
+            if (minefield.template[i - 1] !== undefined){
+                if (minefield.template[i - 1][j - 1] !== undefined) reveal(i-1,j-1);
+                if (minefield.template[i - 1][j    ] !== undefined) reveal(i-1,j  );
+                if (minefield.template[i - 1][j + 1] !== undefined) reveal(i-1,j+1);
+            }
+                if (minefield.template[i    ][j - 1] !== undefined) reveal(i  ,j-1);
+                if (minefield.template[i    ][j + 1] !== undefined) reveal(i  ,j+1);
+                
+            if (minefield.template[i + 1] !== undefined){
+                if (minefield.template[i + 1][j - 1] !== undefined) reveal(i+1,j-1);
+                if (minefield.template[i + 1][j    ] !== undefined) reveal(i+1,j  );
+                if (minefield.template[i + 1][j + 1] !== undefined) reveal(i+1,j+1);
+            }
+
+        } else {
+            // alguma função pra mostrar esse espaço
+        }
+
     }
 };
