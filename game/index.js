@@ -1,4 +1,4 @@
-var a = {
+var minefield = {
     sizex: 0,
     sizey: 0,
     mines: {},
@@ -12,16 +12,11 @@ var a = {
     assetMinefield(){
         this.template = Array.from({length: this.sizex});
         this.template.forEach(function (element, index, array) {
-            a.template[index] = Array.from({length: a.sizey});
-        });
-        this.template.forEach(function (element1, index1, array1) {
-            array1.forEach(function (element2, index2, array2) {
-                a.template[index1][index2] = "";
-            });
+            minefield.template[index] = Array.from({length: minefield.sizey});
         });
     },
     plantMines(qnt){
-        if (qnt >= Math.floor((this.sizex * this.sizey)/8)) {
+        if (qnt >= Math.floor((this.sizex * this.sizey))) {
             return console.log("ERROR: too much 💣's");
         }
         let i = 0;
@@ -30,10 +25,29 @@ var a = {
         while (i < qnt){
             line = Math.floor(Math.random() * (max - min + 1)) + min;
             column = Math.floor(Math.random() * (max - min + 1)) + min;
-            if (!(a.template[line][column] === "x")){
-                a.template[line][column] = "x";
+            if (!(minefield.template[line][column] === "x")){
+                minefield.template[line][column] = "x";
                 i++;
             }
         }
+        this.template.forEach(function (e1, i, array1) {
+            array1.forEach(function (e2, j, array2) {
+                let bombsArea = 0;
+                if (minefield.template[i][j] !== "x"){
+                    if (minefield.template[i - 1] !== undefined && minefield.template[i - 1][j - 1] === "x" ) bombsArea++;
+                    if (minefield.template[i - 1] !== undefined && minefield.template[i - 1][j    ] === "x" ) bombsArea++;
+                    if (minefield.template[i - 1] !== undefined && minefield.template[i - 1][j + 1] === "x" ) bombsArea++;
+
+                    if ( minefield.template[i    ][j - 1] === "x" ) bombsArea++;
+                    if ( minefield.template[i    ][j + 1] === "x" ) bombsArea++;
+                    
+                    if (minefield.template[i + 1] !== undefined && minefield.template[i + 1][j - 1] === "x" ) bombsArea++;
+                    if (minefield.template[i + 1] !== undefined && minefield.template[i + 1][j    ] === "x" ) bombsArea++;
+                    if (minefield.template[i + 1] !== undefined && minefield.template[i + 1][j + 1] === "x" ) bombsArea++;
+
+                    minefield.template[i][j] = bombsArea;
+                }
+            });
+        });
     }
 };
