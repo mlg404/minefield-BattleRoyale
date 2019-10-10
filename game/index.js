@@ -91,3 +91,5 @@ var minefield = {
 
     }
 };
+
+module.exports = minefield;
