@@ -2,6 +2,7 @@ var minefield = {
     sizex: 0,
     sizey: 0,
     template: [],
+    debug: [],
     setSize(x,y){
         this.sizex = x;
         this.sizey = y;
@@ -10,6 +11,10 @@ var minefield = {
         this.template = Array.from({length: this.sizex});
         this.template.forEach(function (element, index, array) {
             minefield.template[index] = Array.from({length: minefield.sizey});
+        });
+        this.debug = Array.from({length: this.sizex});
+        this.debug.forEach(function (element, index, array) {
+            minefield.debug[index] = Array.from({length: minefield.sizey}, (v,k)=> "");
         });
     },
     plantMines(qnt){
@@ -46,29 +51,42 @@ var minefield = {
                 }
             });
         });
+        // minefield.debug = [...minefield.template];
     },
+    // hide(){
+    //     for (let i = 0; i < this.template.length; i++){
+    //         console.log
+    //         for (let j = 0; j < this.template[i].length; j++){
+    //             //this.debug[i][j] = "";
+    //         }
+    //     }
+    // },
     reveal(i,j){
-        let place = this.template[i][j];
-        if (place === "x"){
-            console.log("end")
-        } else if (place === "0"){
-            // alguma função pra mostrar esse espaço
-            if (minefield.template[i - 1] !== undefined){
-                if (minefield.template[i - 1][j - 1] !== undefined) reveal(i-1,j-1);
-                if (minefield.template[i - 1][j    ] !== undefined) reveal(i-1,j  );
-                if (minefield.template[i - 1][j + 1] !== undefined) reveal(i-1,j+1);
-            }
-                if (minefield.template[i    ][j - 1] !== undefined) reveal(i  ,j-1);
-                if (minefield.template[i    ][j + 1] !== undefined) reveal(i  ,j+1);
-                
-            if (minefield.template[i + 1] !== undefined){
-                if (minefield.template[i + 1][j - 1] !== undefined) reveal(i+1,j-1);
-                if (minefield.template[i + 1][j    ] !== undefined) reveal(i+1,j  );
-                if (minefield.template[i + 1][j + 1] !== undefined) reveal(i+1,j+1);
+        let place = minefield.template[i][j];
+        let debug = minefield.debug[i][j];
+        if (debug === ""){
+            if (place === "x"){
+                console.log("end");
+            } else if (place === 0 ){
+                minefield.debug[i][j] = minefield.template[i][j];
+                if (minefield.template[i - 1] != undefined){
+                    if (minefield.template[i - 1][j - 1] != undefined && minefield.template[i - 1][j - 1] != "x") minefield.reveal(i-1,j-1);
+                    if (minefield.template[i - 1][j    ] != undefined && minefield.template[i - 1][j    ] != "x") minefield.reveal(i-1,j  );
+                    if (minefield.template[i - 1][j + 1] != undefined && minefield.template[i - 1][j + 1] != "x") minefield.reveal(i-1,j+1);
+                }
+                    if (minefield.template[i    ][j - 1] != undefined && minefield.template[i    ][j - 1] != "x") minefield.reveal(i  ,j-1);
+                    if (minefield.template[i    ][j + 1] != undefined && minefield.template[i    ][j + 1] != "x") minefield.reveal(i  ,j+1);
+                    
+                if (minefield.template[i + 1] != undefined){
+                    if (minefield.template[i + 1][j - 1] != undefined && minefield.template[i + 1][j - 1] != "x") minefield.reveal(i+1,j-1);
+                    if (minefield.template[i + 1][j    ] != undefined && minefield.template[i + 1][j    ] != "x") minefield.reveal(i+1,j  );
+                    if (minefield.template[i + 1][j + 1] != undefined && minefield.template[i + 1][j + 1] != "x") minefield.reveal(i+1,j+1);
+                }
+    
+            } else {
+                minefield.debug[i][j] = minefield.template[i][j];
             }
 
-        } else {
-            // alguma função pra mostrar esse espaço
         }
 
     }
